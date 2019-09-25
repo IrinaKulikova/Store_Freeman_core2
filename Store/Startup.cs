@@ -43,13 +43,25 @@ namespace Store
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "pagination",
-                    template: "Toys/Page{toyPage}",
-                    defaults: new { Controller = "Toy", action = "List" });
+                    name: null,
+                    template: "{category}/Page{toyPage:int}",
+                    defaults: new { controller = "Toy", action = "List" });
+                routes.MapRoute(
+                    name: null,
+                    template: "Page{toyPage:int}",
+                    defaults: new { controller = "Toy", action = "List", productPage = 1 });
 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Toy}/{action=List}/{id?}");
+                    name: null,
+                    template: "{category}",
+                    defaults: new { controller = "Toy", action = "List", productPage = 1 });
+
+                routes.MapRoute(
+                    name: null,
+                    template: "", defaults: new { controller = "Toy", action = "List", productPage = 1 });
+                routes.MapRoute(
+                    name: null, 
+                    template: "{controller}/{action}/{id?}");
             });
 
             //SeedData.EnsurePopulated(app);

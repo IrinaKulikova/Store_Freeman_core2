@@ -7,5 +7,6 @@ namespace Store.ViewModels
     {
         public IEnumerable<Toy> Toys { get; set; }
         public PagingInfo PagingInfo { get; set; }
+        public string CurrentCategory { get; set; }
     }
 }

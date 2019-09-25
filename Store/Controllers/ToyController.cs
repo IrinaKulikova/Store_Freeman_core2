@@ -15,20 +15,22 @@ namespace Store.Controllers
             _toyRepository = toyRepository;
         }
 
-        public ViewResult List(int toyPage = 1)
+        public ViewResult List(string category,int toyPage = 1)
         {
             return View(new ToysListViewModel
             {
                 Toys = _toyRepository.Toys
+                 .Where(t => category == null || t.Category == category)
                  .OrderBy(p => p.ToyID)
                  .Skip((toyPage - 1) * PageSize)
                  .Take(PageSize),
+                CurrentCategory = category,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = toyPage,
                     ItemsPerPage = PageSize,
                     TotalItems = _toyRepository.Toys.Count()
-                }
+                }                
             });
         }
     }
