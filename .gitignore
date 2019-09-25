@@ -125,3 +125,7 @@ db/*.sqlite3
 log/*.log
 tmp/
 .vs
+/Store/wwwroot/lib/bootstrap/nuget
+/Store/wwwroot/lib/tether/docs
+/Store/wwwroot/lib/tether
+/Store/wwwroot/lib/bootstrap/grunt/gcp-key.json.enc
