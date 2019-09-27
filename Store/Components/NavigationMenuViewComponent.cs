@@ -16,11 +16,8 @@ namespace Store.Components
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
-
-            return View(_repository.Toys
-            .Select(t => t.Category)
-            .Distinct()
-            .OrderBy(c => c));
+            
+            return View(_repository.Catrgories);
         }
     }
 }

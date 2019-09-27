@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Store.Models;
 using Store.Repositories.Interfaces;
@@ -26,10 +27,9 @@ namespace Store.Controllers
             });
         }
 
-        public RedirectToActionResult AddToCart(int ToyID, string returnUrl)
+        public async Task<RedirectToActionResult> AddToCart(int ToyID, string returnUrl)
         {
-            Toy toy = _repository.Toys
-            .FirstOrDefault(р => р.ToyID == ToyID);
+            Toy toy = await _repository.FindByIdAsync(ToyID);
 
             if (toy != null)
             {
@@ -39,11 +39,10 @@ namespace Store.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        public RedirectToActionResult RemoveFromCart(int ToyID,
+        public async Task<RedirectToActionResult> RemoveFromCart(int ToyID,
                                                      string returnUrl)
         {
-            Toy toy = _repository.Toys
-            .FirstOrDefault(p => p.ToyID == ToyID);
+            Toy toy = await _repository.FindByIdAsync(ToyID);
 
             if (toy != null)
             {

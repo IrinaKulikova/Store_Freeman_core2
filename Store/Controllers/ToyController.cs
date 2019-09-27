@@ -2,6 +2,7 @@
 using Store.Repositories.Interfaces;
 using Store.ViewModels;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -16,25 +17,27 @@ namespace Store.Controllers
             _toyRepository = toyRepository;
         }
 
-        public ViewResult List(string category,int toyPage = 1)
+        public async Task<ViewResult> List(string category, int toyPage = 1)
         {
+            var toys = await _toyRepository.Toys();
+
             return View(new ToysListViewModel
             {
-                Toys = _toyRepository.Toys
-                 .Where(t => category == null || t.Category == category)
+                Toys = toys.Where(t => category == null ||
+                                  t.Category == category)
                  .OrderBy(p => p.ToyID)
                  .Skip((toyPage - 1) * PageSize)
                  .Take(PageSize),
                 CurrentCategory = category,
+
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = toyPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = category==null?
-                    _toyRepository.Toys.Count():
-                    _toyRepository.Toys.Where(t=>
-                    t.Category == category).Count()
-                }                
+                    TotalItems = category == null ?
+                    toys.Count() :
+                    toys.Where(t => t.Category == category).Count()
+                }
             });
         }
     }

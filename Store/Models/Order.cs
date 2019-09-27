@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Store.Models
 {
@@ -17,7 +15,7 @@ namespace Store.Models
 
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter the first address line")]
-
+        public bool Shipped { get; set; }
         public string Linel { get; set; }
         public string Line2 { get; set; }
         public string LineЗ { get; set; }
