@@ -8,5 +8,6 @@ namespace Store.Models.DataBaseContext
             : base(options) { }
 
         public DbSet<Toy> Toys { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

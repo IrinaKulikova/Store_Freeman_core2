@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Store.Models;
 using Store.Models.DataBaseContext;
 using Store.Repositories;
 using Store.Repositories.Interfaces;
@@ -26,8 +28,11 @@ namespace Store
                options.UseSqlServer(
                    Configuration["ConnectionStrings:StoreConnection"]));
             services.AddTransient<IToyRepository, DBToyRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddSession();
             services.AddMemoryCache();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
         }
 
@@ -67,7 +72,7 @@ namespace Store
                     template: "{controller}/{action}/{id?}");
             });
 
-            //SeedData.EnsurePopulated(app);
+            SeedData.EnsurePopulated(app);
         }
     }
 }

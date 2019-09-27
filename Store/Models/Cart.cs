@@ -12,6 +12,7 @@ namespace Store.Models
             CartLine line = _lineCollection
                     .Where(t => t.Toy.ToyID == toy.ToyID)
                     .FirstOrDefault();
+
             if (line == null)
             {
                 _lineCollection.Add(new CartLine
