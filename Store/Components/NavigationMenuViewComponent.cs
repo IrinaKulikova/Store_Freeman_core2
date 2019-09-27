@@ -8,15 +8,19 @@ namespace Store.Components
     {
         private IToyRepository _repository;
 
-        public NavigationMenuViewComponent(IToyRepository repo)
+        public NavigationMenuViewComponent(IToyRepository repository)
         {
-            _repository = repo;
+            _repository = repository;
         }
 
-        public IViewComponentResult Invoke() =>
-            View(_repository.Toys
+        public IViewComponentResult Invoke()
+        {
+            ViewBag.SelectedCategory = RouteData?.Values["category"];
+
+            return View(_repository.Toys
             .Select(t => t.Category)
             .Distinct()
             .OrderBy(c => c));
+        }
     }
 }

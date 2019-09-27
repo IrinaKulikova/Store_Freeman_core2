@@ -9,11 +9,12 @@
 
     @foreach (var category in Model)
     {
-        <a class="btn btn-block btn-secondary"
+        <a class="btn btn-block
+        @(category == ViewBag.SelectedCategory? "btn-primary": "btn-secondary")"
            asp-action="List"
            asp-controller="Toy"
            asp-route-category="@category"
-            asp-route-toyPage="1">
-            @category
+           asp-route-toyPage="1">
+           @category
         </a>
     }

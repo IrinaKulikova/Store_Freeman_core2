@@ -8,6 +8,7 @@ namespace Store.Controllers
     public class ToyController : Controller
     {
         private readonly IToyRepository _toyRepository;
+
         public int PageSize { get; set; } = 4;
 
         public ToyController(IToyRepository toyRepository)
@@ -29,7 +30,10 @@ namespace Store.Controllers
                 {
                     CurrentPage = toyPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = _toyRepository.Toys.Count()
+                    TotalItems = category==null?
+                    _toyRepository.Toys.Count():
+                    _toyRepository.Toys.Where(t=>
+                    t.Category == category).Count()
                 }                
             });
         }

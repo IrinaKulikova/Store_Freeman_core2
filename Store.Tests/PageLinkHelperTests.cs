@@ -25,7 +25,7 @@ namespace Store.Tests
             f.GetUrlHelper(It.IsAny<ActionContext>()))
             .Returns(urlHelper.Object);
 
-            PageLinkTagHelper helper =
+            var helper =
             new PageLinkTagHelper(urlHelperFactory.Object)
             {
                 PageModel = new PagingInfo
@@ -36,12 +36,13 @@ namespace Store.Tests
                 },
                 PageAction = "Test"
             };
-            TagHelperContext ctx = new TagHelperContext(
+            var ctx = new TagHelperContext(
             new TagHelperAttributeList(),
             new Dictionary<object, object>(), "");
 
             var content = new Mock<TagHelperContent>();
-            TagHelperOutput output = new TagHelperOutput("div", new TagHelperAttributeList(),
+            TagHelperOutput output = new TagHelperOutput("div", 
+                new TagHelperAttributeList(),
             (cache, encoder) => Task.FromResult(content.Object));
             helper.Process(ctx, output);
 

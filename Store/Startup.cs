@@ -26,6 +26,8 @@ namespace Store
                options.UseSqlServer(
                    Configuration["ConnectionStrings:StoreConnection"]));
             services.AddTransient<IToyRepository, DBToyRepository>();
+            services.AddSession();
+            services.AddMemoryCache();
             services.AddMvc();
         }
 
@@ -40,6 +42,7 @@ namespace Store
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -60,7 +63,7 @@ namespace Store
                     name: null,
                     template: "", defaults: new { controller = "Toy", action = "List", productPage = 1 });
                 routes.MapRoute(
-                    name: null, 
+                    name: null,
                     template: "{controller}/{action}/{id?}");
             });
 
