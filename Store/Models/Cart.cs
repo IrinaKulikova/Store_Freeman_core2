@@ -5,7 +5,11 @@ namespace Store.Models
 {
     public class Cart
     {
+        #region private Fields
+
         private readonly List<CartLine> _lineCollection = new List<CartLine>();
+
+        #endregion
 
         public virtual void AddItem(Toy toy, int quantity)
         {

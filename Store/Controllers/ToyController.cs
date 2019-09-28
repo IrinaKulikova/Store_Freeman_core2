@@ -2,34 +2,44 @@
 using Store.Repositories.Interfaces;
 using Store.ViewModels;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
     public class ToyController : Controller
     {
+        #region private fields
+
         private readonly IToyRepository _toyRepository;
 
+        #endregion
+
+        #region props
+
         public int PageSize { get; set; } = 4;
+
+        #endregion
+
+        #region ctor
 
         public ToyController(IToyRepository toyRepository)
         {
             _toyRepository = toyRepository;
         }
 
-        public async Task<ViewResult> List(string category, int toyPage = 1)
+        #endregion
+
+        public ViewResult List(string category, int toyPage = 1)
         {
-            var toys = await _toyRepository.Toys();
+            var toys = _toyRepository.Toys()
+                       .Where(t => category == null || t.Category == category)
+                       .OrderBy(p => p.ToyID)
+                       .Skip((toyPage - 1) * PageSize)
+                       .Take(PageSize);
 
-            return View(new ToysListViewModel
+            var model = new ToysListViewModel
             {
-                Toys = toys.Where(t => category == null ||
-                                  t.Category == category)
-                 .OrderBy(p => p.ToyID)
-                 .Skip((toyPage - 1) * PageSize)
-                 .Take(PageSize),
+                Toys = toys,
                 CurrentCategory = category,
-
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = toyPage,
@@ -38,7 +48,9 @@ namespace Store.Controllers
                     toys.Count() :
                     toys.Where(t => t.Category == category).Count()
                 }
-            });
+            };
+
+            return View(model);
         }
     }
 }

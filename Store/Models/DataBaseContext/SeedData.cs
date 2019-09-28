@@ -10,7 +10,7 @@ namespace Store.Models.DataBaseContext
         public static void EnsurePopulated(IApplicationBuilder app)
         {
             StoreContext context = app.ApplicationServices
-                .GetRequiredService<StoreContext>();
+                                      .GetRequiredService<StoreContext>();
 
             context.Database.Migrate();
 
@@ -24,7 +24,6 @@ namespace Store.Models.DataBaseContext
                     Category = "Girls",
                     Description = "Bella"
                 },
-
                 new Toy
                 {
                     Name = "Ball",
@@ -32,15 +31,13 @@ namespace Store.Models.DataBaseContext
                     Category = "Children",
                     Description = "Football"
                 },
-
                 new Toy
                 {
                     Name = "Car",
                     Price = 255,
                     Category = "Boys",
-                    Description = "Trunc"
+                    Description = "Trunk"
                 },
-
                 new Toy
                 {
                     Name = "Lol",
@@ -48,7 +45,6 @@ namespace Store.Models.DataBaseContext
                     Category = "Girls",
                     Description = "RockStar"
                 },
-
                 new Toy
                 {
                     Name = "Ball",
@@ -56,7 +52,6 @@ namespace Store.Models.DataBaseContext
                     Category = "Children",
                     Description = "Socket"
                 },
-
                 new Toy
                 {
                     Name = "Car",
@@ -64,8 +59,8 @@ namespace Store.Models.DataBaseContext
                     Category = "Boys",
                     Description = "Bilaz"
                 }
-
                 );
+
                 context.SaveChanges();
             }
         }

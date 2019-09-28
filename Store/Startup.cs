@@ -27,7 +27,7 @@ namespace Store
             services.AddDbContext<StoreContext>(options =>
                options.UseSqlServer(
                    Configuration["ConnectionStrings:StoreConnection"]));
-            services.AddTransient<IToyRepository, DBToyRepository>();
+            services.AddTransient<IToyRepository, ToyRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddSession();
             services.AddMemoryCache();

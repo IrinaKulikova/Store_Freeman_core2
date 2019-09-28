@@ -9,13 +9,16 @@ namespace Store.Models
     {
         [BindNever]
         public int OrderID { get; set; }
+
         [BindNever]
         public ICollection<CartLine> Lines { get; set; }
-        [Required(ErrorMessage = "Please enter а name")]
 
+        [Required(ErrorMessage = "Please enter а name")]
         public string Name { get; set; }
+
         [Required(ErrorMessage = "Please enter the first address line")]
         public bool Shipped { get; set; }
+
         public string Linel { get; set; }
         public string Line2 { get; set; }
         public string LineЗ { get; set; }
