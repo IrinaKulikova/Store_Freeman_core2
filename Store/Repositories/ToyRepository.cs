@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -36,10 +35,38 @@ namespace Store.Repositories
                                  .FirstOrDefaultAsync(t => t.ToyID == id);
         }
 
+        public async Task AddOrUpdate(Toy toy)
+        {
+            if (toy.ToyID == 0)
+            {
+                _context.Toys.Add(toy);
+            }
+            else
+            {
+                _context.Attach(toy);
+                _context.Entry(toy).State = EntityState.Modified;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
         public IQueryable<Toy> Toys()
         {
             return _context.Toys.AsQueryable()
                                 .AsNoTracking();
+        }
+
+        public async Task<Toy> DeleteToy(int toyId)
+        {
+            var entry = _context.Toys
+                                .FirstOrDefault(t => t.ToyID == toyId);
+            if (entry != null)
+            {
+                _context.Toys.Remove(entry);
+                await _context.SaveChangesAsync();
+            }
+
+            return entry;
         }
     }
 }

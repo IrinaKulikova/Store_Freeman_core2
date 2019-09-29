@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Models;
 using Store.Repositories.Interfaces;
 using Store.ViewModels;
 using System.Linq;

@@ -20,10 +20,10 @@
             <td class="text-center">
                 <form asp-action="Delete" method="post">
                     <a asp-action="Edit" class="btn btn-sm btn-warning"
-                       asp-route-productid="@item.ToyID">
+                       asp-route-ToyID="@item.ToyID">
                         Edit
                     </a>
-                    <input type="hidden" name="ToyID" value="@item.ToyID" />
+                    <input type="hidden" name="toyId" value="@item.ToyID" />
                     <button type="submit" class="btn btn-danger btn-sm">
                         Delete
                     </button>

@@ -10,5 +10,7 @@ namespace Store.Repositories.Interfaces
         IQueryable<Toy> Toys();
         Task<Toy> FindByIdAsync(int id);
         List<string> Catrgories { get; }
+        Task AddOrUpdate(Toy toy);
+        Task<Toy> DeleteToy(int toyId);
     }
 }
