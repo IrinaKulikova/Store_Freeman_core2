@@ -1,26 +1,33 @@
 ﻿@model Toy
 @using  Store.Infrastructure;
 
-<div class="card card-outline-primary m-1 р-1">
-    <div class="bg-faded р-1">
+<div class="card card-outline-primary m-3 р-1 col-3">
+    <div class="р-3">
         <h4>
             @Model.Name
-            <span class="badge badge-pill badge-primary" style="float:right">
+            <span class="badge badge-default" style="float:right">
                 <small>@Model.Price.ToString("c")</small>
             </span>
         </h4>
     </div>
-    <div class="card-text p-l">@Model.Description</div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img class="toys text-right" src="~/Resources/toys_imgs/toys.png" alt="toys" />
+            </div>
+            <div class="col-sm">
+                <div class="card-text p-l"></div>
+            </div>
+        </div>
+    </div>
     <form id="@Model.ToyID" asp-action="AddToCart"
           asp-controller="Cart" method="post">
         <input type="hidden" asp-for="ToyID" />
         <input type="hidden" name="returnUrl"
                value="@ViewContext.HttpContext.Request.PathAndQuery()" />
         <span class="card-text р-1">
-            @Model.Description
             <button type="submit"
-                    class="btn btn-success btn-sm pull-right" style="float:right">
+                    class="btn btn-outline-info btn-sm pull-right" style="float:right">
                 Add То Cart
             </button>
         </span>

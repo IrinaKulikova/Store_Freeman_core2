@@ -1,13 +1,17 @@
 ﻿@model ToysListViewModel
 @using Store.ViewModels;
 
-@foreach (var t in Model.Toys)
-{
-    @Html.Partial("ToySummary", t)
-}
+<div class="col-9">
+    <div class="toysBox">
+        @foreach (var t in Model.Toys)
+        {
+            @Html.Partial("ToySummary", t)
+        }
+    </div>
 
-<div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-secondary"
-     page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
-     class="btn-group pull-right m-1">
+    <div page-model="@Model.PagingInfo" page-action="List" page-classes-enabled="true"
+         page-class="btn" page-class-normal="btn-secondary"
+         page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
+         class="btn-group m-1">
+    </div>
 </div>

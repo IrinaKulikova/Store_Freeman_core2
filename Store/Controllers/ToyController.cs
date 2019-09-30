@@ -15,7 +15,7 @@ namespace Store.Controllers
 
         #region props
 
-        public int PageSize { get; set; } = 4;
+        public int PageSize { get; set; } = 6;
 
         #endregion
 

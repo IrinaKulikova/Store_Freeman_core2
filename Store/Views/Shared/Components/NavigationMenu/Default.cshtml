@@ -1,20 +1,36 @@
 ﻿@model IEnumerable<string>
 
-    <a class="btn btn-block btn-secondary"
-       asp-action="List"
-       asp-controller="Toy"
-       asp-route-category="">
-       Home
-    </a>
+<a class="btn btn-block "
+   asp-action="List"
+   asp-controller="Toy"
+   asp-route-category="">
+    All
+    <img class="toy" src="~/Resources/toys_imgs/All.png" />
+</a>
 
-    @foreach (var category in Model)
-    {
-        <a class="btn btn-block
-        @(category == ViewBag.SelectedCategory? "btn-primary": "btn-secondary")"
-           asp-action="List"
-           asp-controller="Toy"
-           asp-route-category="@category"
-           asp-route-toyPage="1">
-           @category
-        </a>
-    }
+<a class="btn btn-block"
+   asp-action="List"
+   asp-controller="Toy"
+   asp-route-category="Girls"
+   asp-route-toyPage="1">
+    Girls
+    <img class="toy" src="~/Resources/toys_imgs/Girls.png" />
+</a>
+
+<a class="btn btn-block"
+   asp-action="List"
+   asp-controller="Toy"
+   asp-route-category="Boys"
+   asp-route-toyPage="1">
+    Boys
+    <img class="toy" src="~/Resources/toys_imgs/Boys.png" />
+</a>
+
+<a class="btn btn-block"
+   asp-action="List"
+   asp-controller="Toy"
+   asp-route-category="Children"
+   asp-route-toyPage="1">
+    Children
+    <img class="toy" src="~/Resources/toys_imgs/Children.png" />
+</a>

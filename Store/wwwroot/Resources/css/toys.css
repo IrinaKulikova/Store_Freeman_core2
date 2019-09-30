@@ -1,0 +1,18 @@
+﻿body{
+    min-width: 1000px
+}
+
+.toy{
+    width:90%;
+    max-width:140px
+}
+
+.toys{
+    height:160px;
+}
+
+.toysBox {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}

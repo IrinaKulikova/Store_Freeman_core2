@@ -6,14 +6,13 @@
           asp-href-include="/lib/bootstrap/dist/**/*.min.css"
           asp-href-exclude="**/*-reboot*,**/*-grid*" />
     <link rel="stylesheet" asp-href-include="/lib/fontawesome/css/*.css" />
+    <link rel="stylesheet" href="~/Resources/css/toys.css" />
     <title>Store</title>
 </head>
 <body>
     <div class="navbar navbar-inverse bg-inverse" role="navigation">
         <div class="row">
-            <a class="col navbar-brand" href="#">
-                STORE
-            </a>
+            <a class="col navbar-brand" href="/">TOY STORE</a>
             <div class="col-4 text-right">
                 @await Component.InvokeAsync("CartSummary")
             </div>
@@ -23,11 +22,7 @@
         <div id="categories" class="col-3">
             @await Component.InvokeAsync("NavigationMenu")
         </div>
-        <div class="col-9">
-            <div>
-                @RenderBody()
-            </div>
-        </div>
+        @RenderBody()
     </div>
 </body>
 </html>
