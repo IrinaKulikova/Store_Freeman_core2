@@ -13,9 +13,9 @@ namespace Store.Models
 
         public virtual void AddItem(Toy toy, int quantity)
         {
-            CartLine line = _lineCollection
-                    .Where(t => t.Toy.ToyID == toy.ToyID)
-                    .FirstOrDefault();
+            var line = _lineCollection
+                        .Where(t => t.Toy.ToyID == toy.ToyID)
+                        .FirstOrDefault();
 
             if (line == null)
             {

@@ -52,14 +52,13 @@ namespace Store.Repositories
 
         public IQueryable<Toy> Toys()
         {
-            return _context.Toys.AsQueryable()
-                                .AsNoTracking();
+            return _context.Toys.AsQueryable().AsNoTracking();
         }
 
         public async Task<Toy> DeleteToy(int toyId)
         {
-            var entry = _context.Toys
-                                .FirstOrDefault(t => t.ToyID == toyId);
+            var entry = _context.Toys.FirstOrDefault(t => t.ToyID == toyId);
+
             if (entry != null)
             {
                 _context.Toys.Remove(entry);

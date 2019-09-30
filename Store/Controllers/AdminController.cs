@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Store.Models;
 using Store.Repositories.Interfaces;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         #region private fields
@@ -32,7 +34,6 @@ namespace Store.Controllers
         {
             return View(await _toyRepository.FindByIdAsync(toyId));
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Edit(Toy toy)

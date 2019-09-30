@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Store.Models;
 using Store.Repositories.Interfaces;
 using System.Linq;
@@ -8,29 +9,39 @@ namespace Store.Controllers
 {
     public class OrderController : Controller
     {
-        private IOrderRepository repository;
-        private Cart cart;
+        #region private fields
+
+        private IOrderRepository _repository;
+        private Cart _cart;
+
+        #endregion
+
+        #region ctor
 
         public OrderController(IOrderRepository repoService, Cart cartService)
         {
-            repository = repoService;
-            cart = cartService;
+            _repository = repoService;
+            _cart = cartService;
         }
 
+        #endregion
+
+        [Authorize]
         public async Task<ViewResult> List()
         {
-            return View(await repository.Orders(false));
+            return View(await _repository.Orders(false));
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> MarkShipped(int orderID)
         {
-            var order = await repository.FindByIdAsync(orderID);
+            var order = await _repository.FindByIdAsync(orderID);
 
             if (order != null)
             {
                 order.Shipped = true;
-                await repository.SaveOrder(order);
+                await _repository.SaveOrder(order);
             }
 
             return RedirectToAction(nameof(List));
@@ -42,27 +53,27 @@ namespace Store.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(Order order)
         {
-            if (cart.Lines.Count() == 0)
+            if (_cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Sorry, your cart is empty! ");
             }
 
-            if (ModelState.IsValid)
-            {
-                order.Lines = cart.Lines.ToArray();
-                await repository.SaveOrder(order);
-                return RedirectToAction(nameof(Completed));
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return View(order);
             }
+
+            order.Lines = _cart.Lines.ToArray();
+            await _repository.SaveOrder(order);
+
+            return RedirectToAction(nameof(Completed));
         }
 
 
         public ViewResult Completed()
         {
-            cart.Clear();
+            _cart.Clear();
+
             return View();
         }
     }

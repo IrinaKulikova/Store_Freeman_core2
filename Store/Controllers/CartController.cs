@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Store.Models;
 using Store.Repositories.Interfaces;
@@ -9,14 +8,22 @@ namespace Store.Controllers
 {
     public class CartController : Controller
     {
+        #region private fields
+
         private readonly IToyRepository _repository;
         private readonly Cart _cartService;
+
+        #endregion
+
+        #region ctor
 
         public CartController(IToyRepository repository, Cart cartService)
         {
             _repository = repository;
             _cartService = cartService;
         }
+
+        #endregion
 
         public ViewResult Index(string returnUrl)
         {
@@ -29,7 +36,7 @@ namespace Store.Controllers
 
         public async Task<RedirectToActionResult> AddToCart(int ToyID, string returnUrl)
         {
-            Toy toy = await _repository.FindByIdAsync(ToyID);
+            var toy = await _repository.FindByIdAsync(ToyID);
 
             if (toy != null)
             {
@@ -42,7 +49,7 @@ namespace Store.Controllers
         public async Task<RedirectToActionResult> RemoveFromCart(int ToyID,
                                                      string returnUrl)
         {
-            Toy toy = await _repository.FindByIdAsync(ToyID);
+            var toy = await _repository.FindByIdAsync(ToyID);
 
             if (toy != null)
             {
