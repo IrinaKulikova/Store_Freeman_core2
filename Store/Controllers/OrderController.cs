@@ -34,14 +34,14 @@ namespace Store.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> MarkShipped(int orderID)
+        public async Task<IActionResult> MarkShipped(int orderId)
         {
-            var order = await _repository.FindByIdAsync(orderID);
+            var order = await _repository.FindByIdAsync(orderId);
 
             if (order != null)
             {
                 order.Shipped = true;
-                await _repository.SaveOrder(order);
+                await _repository.SaveOrUpdate(order);
             }
 
             return RedirectToAction(nameof(List));
@@ -64,7 +64,7 @@ namespace Store.Controllers
             }
 
             order.Lines = _cart.Lines.ToArray();
-            await _repository.SaveOrder(order);
+            await _repository.SaveOrUpdate(order);
 
             return RedirectToAction(nameof(Completed));
         }

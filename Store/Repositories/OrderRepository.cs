@@ -32,7 +32,7 @@ namespace Store.Repositories
                                   .AsNoTracking();
         }
 
-        public  async Task<List<Order>> Orders(bool status)
+        public async Task<List<Order>> Orders(bool status)
         {
             return await GetOrders().Where(o => o.Shipped == status)
                                     .ToListAsync();
@@ -43,25 +43,30 @@ namespace Store.Repositories
             return await GetOrders().ToListAsync();
         }
 
-        public async Task<bool> SaveOrder(Order order)
+        public async Task SaveOrUpdate(Order order)
         {
-            _context.AttachRange(order.Lines.Select(l => l.Toy));
+            if (order.Lines != null || order.OrderID == 0)
+            {
+                _context.AttachRange(order.Lines.Select(l => l.Toy));
+            }
 
             if (order.OrderID == 0)
             {
                 _context.Orders.Add(order);
-                await _context.SaveChangesAsync();
-
-                return true;
+            }
+            else
+            {
+                _context.Attach(order);
+                _context.Entry(order).State = EntityState.Modified;
             }
 
-            return false;
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Order> FindByIdAsync(int id)
         {
-           return await _context.Orders.AsNoTracking()
-                                .FirstOrDefaultAsync(o => o.OrderID == id);
+            return await _context.Orders.AsNoTracking()
+                                 .FirstOrDefaultAsync(o => o.OrderID == id);
         }
     }
 }

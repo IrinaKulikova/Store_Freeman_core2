@@ -45,8 +45,8 @@ namespace Store.Controllers
                     CurrentPage = toyPage,
                     ItemsPerPage = PageSize,
                     TotalItems = category == null ?
-                    toys.Count() :
-                    toys.Where(t => t.Category == category).Count()
+                    _toyRepository.Toys().Count() :
+                     _toyRepository.Toys().Where(t => t.Category == category).Count()
                 }
             };
 

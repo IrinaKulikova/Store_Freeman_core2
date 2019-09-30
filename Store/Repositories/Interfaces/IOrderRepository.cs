@@ -9,6 +9,6 @@ namespace Store.Repositories.Interfaces
         Task<List<Order>> Orders(bool status);
         Task<List<Order>> Orders();
         Task<Order> FindByIdAsync(int id);
-        Task<bool> SaveOrder(Order order);
+        Task SaveOrUpdate(Order order);
     }
 }

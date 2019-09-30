@@ -23,8 +23,8 @@
                 <th>Toy</th>
                 <th>Quantity</th>
                 <td>
-                    <form asp-cation="MarkShipped" method="post">
-                        <input type="hidden" name="orderid" value="@o.OrderID" />
+                    <form asp-action="MarkShipped" method="post">
+                        <input type="hidden" name="orderId" value="@o.OrderID" />
                         <button type="submit" class="btn btn-sm btn-danger">
                             Ship
                         </button>
