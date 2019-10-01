@@ -29,17 +29,17 @@ namespace Store.Tests
             Mock<IToyRepository> mockToyRepository = new Mock<IToyRepository>();
             mockToyRepository.Setup(m => m.Toys()).Returns((new List<Toy>()
             {
-                new Toy{ ToyID = 1, Name = "T1"},
-                new Toy{ ToyID = 2,  Name= "T2"},
-                new Toy{ ToyID = 3,  Name= "T3"},
-                new Toy{ ToyID = 4,  Name= "T4"},
-                new Toy{ ToyID = 5,  Name= "T5"}
+                new Toy{ ToyId = 1, Name = "T1"},
+                new Toy{ ToyId = 2,  Name= "T2"},
+                new Toy{ ToyId = 3,  Name= "T3"},
+                new Toy{ ToyId = 4,  Name= "T4"},
+                new Toy{ ToyId = 5,  Name= "T5"}
             }).AsQueryable());
 
             var controller = new ToyController(mockToyRepository.Object);
             controller.PageSize = 2;
 
-            var result = controller.List("", 2);
+            var result = controller.List(0, 2);
             var listViewModel = result.ViewData.Model as ToysListViewModel;
             return listViewModel;
         }

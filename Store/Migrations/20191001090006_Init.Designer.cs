@@ -10,8 +10,8 @@ using Store.Models.DataBaseContext;
 namespace Store.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20190927190134_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191001090006_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,15 +31,28 @@ namespace Store.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<int?>("ToyID");
+                    b.Property<int?>("ToyId");
 
                     b.HasKey("CartLineID");
 
                     b.HasIndex("OrderID");
 
-                    b.HasIndex("ToyID");
+                    b.HasIndex("ToyId");
 
                     b.ToTable("CartLine");
+                });
+
+            modelBuilder.Entity("Store.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Store.Models.Order", b =>
@@ -79,19 +92,23 @@ namespace Store.Migrations
 
             modelBuilder.Entity("Store.Models.Toy", b =>
                 {
-                    b.Property<int>("ToyID")
+                    b.Property<int>("ToyId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Category");
+                    b.Property<int?>("CategoryId");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
-                    b.HasKey("ToyID");
+                    b.HasKey("ToyId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Toys");
                 });
@@ -104,7 +121,14 @@ namespace Store.Migrations
 
                     b.HasOne("Store.Models.Toy", "Toy")
                         .WithMany()
-                        .HasForeignKey("ToyID");
+                        .HasForeignKey("ToyId");
+                });
+
+            modelBuilder.Entity("Store.Models.Toy", b =>
+                {
+                    b.HasOne("Store.Models.Category", "Category")
+                        .WithMany("Toys")
+                        .HasForeignKey("CategoryId");
                 });
 #pragma warning restore 612, 618
         }

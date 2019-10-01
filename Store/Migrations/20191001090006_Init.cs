@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Store.Migrations
 {
-    public partial class Orders : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
@@ -14,7 +27,8 @@ namespace Store.Migrations
                     OrderID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
-                    Linel = table.Column<string>(nullable: false),
+                    Shipped = table.Column<bool>(nullable: false),
+                    Linel = table.Column<string>(nullable: true),
                     Line2 = table.Column<string>(nullable: true),
                     LineЗ = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: false),
@@ -29,12 +43,34 @@ namespace Store.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Toys",
+                columns: table => new
+                {
+                    ToyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Toys", x => x.ToyId);
+                    table.ForeignKey(
+                        name: "FK_Toys_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartLine",
                 columns: table => new
                 {
                     CartLineID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ToyID = table.Column<int>(nullable: true),
+                    ToyId = table.Column<int>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     OrderID = table.Column<int>(nullable: true)
                 },
@@ -48,10 +84,10 @@ namespace Store.Migrations
                         principalColumn: "OrderID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CartLine_Toys_ToyID",
-                        column: x => x.ToyID,
+                        name: "FK_CartLine_Toys_ToyId",
+                        column: x => x.ToyId,
                         principalTable: "Toys",
-                        principalColumn: "ToyID",
+                        principalColumn: "ToyId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -61,9 +97,14 @@ namespace Store.Migrations
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartLine_ToyID",
+                name: "IX_CartLine_ToyId",
                 table: "CartLine",
-                column: "ToyID");
+                column: "ToyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Toys_CategoryId",
+                table: "Toys",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -73,6 +114,12 @@ namespace Store.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Toys");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

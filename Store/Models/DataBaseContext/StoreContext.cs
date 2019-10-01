@@ -9,5 +9,6 @@ namespace Store.Models.DataBaseContext
 
         public DbSet<Toy> Toys { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

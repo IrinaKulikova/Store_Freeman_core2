@@ -14,52 +14,57 @@ namespace Store.Models.DataBaseContext
 
             context.Database.Migrate();
 
-            if (!context.Toys.Any())
+            if (!context.Categories.Any() && !context.Toys.Any())
             {
+
+                var girls = new Category() {  Name = "Girls" };
+                var boys = new Category() {  Name = "Boys" };
+                var children = new Category() {  Name = "Children" };
+
+
                 context.Toys.AddRange(
                 new Toy
                 {
                     Name = "Doll",
                     Price = 250,
-                    Category = "Girls",
+                    Category = girls,
                     Description = "Bella"
                 },
                 new Toy
                 {
                     Name = "Ball",
                     Price = 179,
-                    Category = "Children",
+                    Category = children,
                     Description = "Football"
                 },
                 new Toy
                 {
                     Name = "Car",
                     Price = 255,
-                    Category = "Boys",
+                    Category = boys,
                     Description = "Trunk"
                 },
                 new Toy
                 {
                     Name = "Lol",
                     Price = 550,
-                    Category = "Girls",
+                    Category = girls,
                     Description = "RockStar"
                 },
                 new Toy
                 {
                     Name = "Ball",
                     Price = 209,
-                    Category = "Children",
+                    Category = children,
                     Description = "Socket"
                 },
                 new Toy
                 {
                     Name = "Car",
                     Price = 555,
-                    Category = "Boys",
+                    Category = boys,
                     Description = "Bilaz"
-                }
-                );
+                });
 
                 context.SaveChanges();
             }

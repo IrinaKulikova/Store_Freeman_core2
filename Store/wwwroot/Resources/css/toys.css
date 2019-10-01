@@ -16,3 +16,7 @@
     flex-wrap: wrap;
     align-content: space-between;
 }
+
+.toyCard{
+    width: 30%
+}

@@ -1,7 +1,7 @@
 ﻿@model Toy
 @using  Store.Infrastructure;
 
-<div class="card card-outline-primary m-3 р-1 col-3">
+<div class="card card-outline-primary m-3 р-1 toyCard">
     <div class="р-3">
         <h4>
             @Model.Name
@@ -20,9 +20,9 @@
             </div>
         </div>
     </div>
-    <form id="@Model.ToyID" asp-action="AddToCart"
+    <form id="@Model.ToyId" asp-action="AddToCart"
           asp-controller="Cart" method="post">
-        <input type="hidden" asp-for="ToyID" />
+        <input type="hidden" asp-for="ToyId" />
         <input type="hidden" name="returnUrl"
                value="@ViewContext.HttpContext.Request.PathAndQuery()" />
         <span class="card-text р-1">

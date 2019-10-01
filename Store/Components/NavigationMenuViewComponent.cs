@@ -8,15 +8,16 @@ namespace Store.Components
     {
         #region private fields
 
-        private IToyRepository _repository;
+        private ICategoryRepository _categoryRepository;
 
         #endregion
 
         #region ctor
 
-        public NavigationMenuViewComponent(IToyRepository repository)
+        public NavigationMenuViewComponent(IToyRepository repository,
+                                            ICategoryRepository categoryRepository)
         {
-            _repository = repository;
+            _categoryRepository = categoryRepository;
         }
 
         #endregion
@@ -24,8 +25,8 @@ namespace Store.Components
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
-            
-            return View(_repository.Catrgories);
+
+            return View(_categoryRepository.Categories());
         }
     }
 }

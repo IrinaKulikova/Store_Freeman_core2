@@ -25,19 +25,15 @@ namespace Store.Repositories
 
         #endregion
 
-        public List<string> Catrgories => _context.Toys.Select(t => t.Category)
-                                                   .AsNoTracking()
-                                                   .Distinct().ToList();
-
         public async Task<Toy> FindByIdAsync(int id)
         {
-            return await _context.Toys.AsNoTracking()
-                                 .FirstOrDefaultAsync(t => t.ToyID == id);
+            return await _context.Toys.AsNoTracking().Include(t => t.Category)
+                                 .FirstOrDefaultAsync(t => t.ToyId == id);
         }
 
         public async Task AddOrUpdate(Toy toy)
         {
-            if (toy.ToyID == 0)
+            if (toy.ToyId == 0)
             {
                 _context.Toys.Add(toy);
             }
@@ -57,7 +53,7 @@ namespace Store.Repositories
 
         public async Task<Toy> DeleteToy(int toyId)
         {
-            var entry = _context.Toys.FirstOrDefault(t => t.ToyID == toyId);
+            var entry = _context.Toys.FirstOrDefault(t => t.ToyId == toyId);
 
             if (entry != null)
             {
@@ -66,6 +62,11 @@ namespace Store.Repositories
             }
 
             return entry;
+        }
+
+        public async Task<Toy> FindByIdForSerializeAsync(int id)
+        {
+            return await _context.Toys.FirstOrDefaultAsync(t => t.ToyId == id);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Store.DTOModels;
 using Store.Models;
 using Store.Repositories.Interfaces;
 using Store.ViewModels;
@@ -34,9 +35,9 @@ namespace Store.Controllers
             });
         }
 
-        public async Task<RedirectToActionResult> AddToCart(int ToyID, string returnUrl)
+        public async Task<RedirectToActionResult> AddToCart(int ToyId, string returnUrl)
         {
-            var toy = await _repository.FindByIdAsync(ToyID);
+            var toy = await _repository.FindByIdForSerializeAsync(ToyId);
 
             if (toy != null)
             {

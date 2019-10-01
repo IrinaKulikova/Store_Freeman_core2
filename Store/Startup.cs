@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Store.MiddleWareComponents;
 using Store.Models;
 using Store.Models.DataBaseContext;
 using Store.Repositories;
@@ -53,6 +53,7 @@ namespace Store
 
             services.AddTransient<IToyRepository, ToyRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -68,7 +69,7 @@ namespace Store
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });           
+            });
 
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
         }
@@ -91,8 +92,11 @@ namespace Store
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
-                       
-            app.UseMvc(routes => {
+            app.UseMiddleware<IgnoreRouteMiddleware>();
+
+            app.UseMvc(routes =>
+            {
+
                 routes.MapRoute(name: "Error", template: "Error",
                     defaults: new { controller = "Error", action = "Error" });
 
@@ -122,7 +126,7 @@ namespace Store
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
 
-            //SeedData.EnsurePopulated(app);
+            SeedData.EnsurePopulated(app);
             //IdentitySeedData.EnsurePopulated(app);
         }
     }

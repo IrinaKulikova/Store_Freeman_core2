@@ -22,7 +22,9 @@
         <div id="categories" class="col-3">
             @await Component.InvokeAsync("NavigationMenu")
         </div>
-        @RenderBody()
+        <div class="col-8">
+            @RenderBody()
+        </div>
     </div>
 </body>
 </html>
