@@ -1,6 +1,4 @@
-﻿using Store.DTOModels;
-
-namespace Store.Models
+﻿namespace Store.Models
 {
     public class CartLine
     {

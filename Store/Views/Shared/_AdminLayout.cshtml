@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css"/>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -19,8 +19,14 @@
         <div class="col">
             <h4>@ViewBag.Title</h4>
         </div>
-        <div class="col-2">
+        <div class="col-3">
             <a class="btn btn-sm btn-primary"
+               asp-action="List" asp-controller="Toy">Store</a>
+            <a class="btn btn-sm btn-primary"
+               asp-action="List" asp-controller="Order">Order List</a>
+            <a class="btn btn-sm btn-primary"
+               asp-action="Index" asp-controller="Admin">Toy List</a>
+            <a class="btn btn-sm btn-danger"
                asp-action="Logout" asp-controller="Account">Log Out</a>
         </div>
     </div>

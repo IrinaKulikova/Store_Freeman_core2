@@ -1,5 +1,4 @@
-﻿using Store.DTOModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Store.Models
@@ -20,7 +19,7 @@ namespace Store.Models
 
             if (line == null)
             {
-                _lineCollection.Add(new CartLine
+                _lineCollection.Add(new CartLine()
                 {
                     Toy = toy,
                     Quantity = quantity
@@ -32,9 +31,9 @@ namespace Store.Models
             }
         }
 
-        public virtual void RemoveLine(Toy toy)
+        public virtual void RemoveLine(int toyId)
         {
-            _lineCollection.RemoveAll(l => l.Toy.ToyId == toy.ToyId);
+            _lineCollection.RemoveAll(l => l.Toy.ToyId == toyId);
         }
 
         public virtual decimal ComputeTotalValue()

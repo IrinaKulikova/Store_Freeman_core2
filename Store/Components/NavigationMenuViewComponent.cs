@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Repositories.Interfaces;
-using System.Linq;
 
 namespace Store.Components
 {
@@ -14,8 +13,7 @@ namespace Store.Components
 
         #region ctor
 
-        public NavigationMenuViewComponent(IToyRepository repository,
-                                            ICategoryRepository categoryRepository)
+        public NavigationMenuViewComponent(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

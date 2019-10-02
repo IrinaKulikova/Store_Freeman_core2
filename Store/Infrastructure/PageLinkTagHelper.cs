@@ -43,8 +43,8 @@ namespace Store.Infrastructure
         public override void Process(TagHelperContext context,
                                      TagHelperOutput output)
         {
-            IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
-            TagBuilder result = new TagBuilder("div");
+            var urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
+            var result = new TagBuilder("div");
 
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Store.DTOModels;
 using Store.Infrastructure;
 using System;
 
@@ -14,9 +13,9 @@ namespace Store.Models
 
         public static Cart GetCart(IServiceProvider services)
         {
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?
+            var session = services.GetRequiredService<IHttpContextAccessor>()?
                     .HttpContext.Session;
-            SessionCart cart = session?.GetJson<SessionCart>("Cart")
+            var cart = session?.GetJson<SessionCart>("Cart")
                     ?? new SessionCart();
             cart.Session = session;
 
@@ -29,9 +28,9 @@ namespace Store.Models
             Session.SetJson("Cart", this);
         }
 
-        public override void RemoveLine(Toy toy)
+        public override void RemoveLine(int toyId)
         {
-            base.RemoveLine(toy);
+            base.RemoveLine(toyId);
             Session.SetJson("Cart", this);
         }
 

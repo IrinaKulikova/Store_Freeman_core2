@@ -47,7 +47,7 @@ namespace Store.Controllers
                     await _signInManager.SignOutAsync();
 
                     var result = await _signInManager.PasswordSignInAsync(user,
-                                        loginModel.Password, false, false);
+                            loginModel.Password, false, false);
 
                     if (result.Succeeded)
                     {

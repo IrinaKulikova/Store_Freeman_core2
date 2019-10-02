@@ -9,12 +9,20 @@ namespace Store.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
+        #region private fields
+
         private readonly StoreContext _context;
+
+        #endregion
+
+        #region ctor
 
         public CategoryRepository(StoreContext context)
         {
             _context = context;
         }
+
+        #endregion
 
         public IQueryable<Category> Categories()
         {

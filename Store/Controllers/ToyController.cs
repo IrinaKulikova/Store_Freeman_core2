@@ -42,25 +42,23 @@ namespace Store.Controllers
             var currentCategory = (!String.IsNullOrEmpty(category)) ?
                         await _categoryRepository.FindByName(category) : null;
 
-            if (String.IsNullOrEmpty(category))
+            if (currentCategory == null)
             {
 
-                toys = _toyRepository.Toys()
-                           .OrderBy(p => p.ToyId)
-                           .Skip((toyPage - 1) * PageSize)
-                           .Take(PageSize).ToList();
+                toys = _toyRepository.GetAll().OrderBy(p => p.ToyId)
+                        .Skip((toyPage - 1) * PageSize)
+                        .Take(PageSize).ToList();
             }
             else
             {
                 toys = currentCategory.Toys;
             }
 
-            
-            var total = (String.IsNullOrEmpty(category)) ?
-                                _toyRepository.Toys().Count() :
-                                currentCategory.Toys.Count();
 
-            var model = new ToysListViewModel
+            var total = String.IsNullOrEmpty(category) ?
+                    _toyRepository.GetAll().Count() : currentCategory.Toys.Count();
+
+            var model = new ToysListViewModel()
             {
                 Toys = toys,
                 CurrentCategory = currentCategory,

@@ -28,7 +28,7 @@ namespace Store.Repositories
         public async Task<Toy> FindByIdAsync(int id)
         {
             return await _context.Toys.AsNoTracking().Include(t => t.Category)
-                                 .FirstOrDefaultAsync(t => t.ToyId == id);
+                    .Include(t=>t.CartLines).FirstOrDefaultAsync(t => t.ToyId == id);
         }
 
         public async Task AddOrUpdate(Toy toy)
@@ -46,12 +46,12 @@ namespace Store.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public IQueryable<Toy> Toys()
+        public IQueryable<Toy> GetAll()
         {
             return _context.Toys.AsQueryable().AsNoTracking();
         }
 
-        public async Task<Toy> DeleteToy(int toyId)
+        public async Task<Toy> DeleteById(int toyId)
         {
             var entry = _context.Toys.FirstOrDefault(t => t.ToyId == toyId);
 

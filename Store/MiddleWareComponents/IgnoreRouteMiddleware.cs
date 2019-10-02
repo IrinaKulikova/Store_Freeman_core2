@@ -6,14 +6,20 @@ namespace Store.MiddleWareComponents
 {
     public class IgnoreRouteMiddleware
     {
-        private readonly RequestDelegate next;
+        #region private fields
 
-        // You can inject a dependency here that gives you access
-        // to your ignored route configuration.
+        private readonly RequestDelegate _next;
+
+        #endregion
+
+        #region ctor
+
         public IgnoreRouteMiddleware(RequestDelegate next)
         {
-            this.next = next;
+            _next = next;
         }
+
+        #endregion
 
         public async Task Invoke(HttpContext context)
         {
@@ -28,7 +34,7 @@ namespace Store.MiddleWareComponents
                 return;
             }
 
-            await next.Invoke(context);
+            await _next.Invoke(context);
         }
     }
 }

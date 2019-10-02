@@ -15,7 +15,7 @@ namespace Store.ViewModels
         public string Description { get; set; }
 
         [Required]
-        [Range(0.01, double.MaxValue, ErrorMessage =
+        [Range(0, double.MaxValue, ErrorMessage =
                                      "Please enter а positive price")]
         public decimal Price { get; set; }
 

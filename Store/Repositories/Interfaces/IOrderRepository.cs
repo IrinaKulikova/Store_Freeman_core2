@@ -1,13 +1,13 @@
 ﻿using Store.Models;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Store.Repositories.Interfaces
 {
     public interface IOrderRepository
     {
-        Task<List<Order>> Orders(bool status);
-        Task<List<Order>> Orders();
+        IQueryable<Order> Orders(bool status);
+        IQueryable<Order> Orders();
         Task<Order> FindByIdAsync(int id);
         Task SaveOrUpdate(Order order);
     }

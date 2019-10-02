@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 
 namespace Store.Models
 {
@@ -10,6 +9,6 @@ namespace Store.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public Category Category { get; set; }
+        public ICollection<CartLine> CartLines { get; set; }
     }
-
 }

@@ -56,7 +56,6 @@ namespace Store
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddMemoryCache();
             services.AddSession(opts =>
             {

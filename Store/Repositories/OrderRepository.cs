@@ -18,29 +18,27 @@ namespace Store.Repositories
 
         #region ctor
 
-        public OrderRepository(StoreContext ctx)
+        public OrderRepository(StoreContext cotext)
         {
-            _context = ctx;
+            _context = cotext;
         }
 
         #endregion
 
         private IQueryable<Order> GetOrders()
         {
-            return _context.Orders.Include(o => o.Lines)
-                                  .ThenInclude(o => o.Toy)
-                                  .AsNoTracking();
+            return _context.Orders.Include(o => o.Lines).ThenInclude(o => o.Toy)
+                    .AsNoTracking();
         }
 
-        public async Task<List<Order>> Orders(bool status)
+        public IQueryable<Order> Orders(bool status)
         {
-            return await GetOrders().Where(o => o.Shipped == status)
-                                    .ToListAsync();
+            return GetOrders().Where(o => o.Shipped == status);
         }
 
-        public async Task<List<Order>> Orders()
+        public IQueryable<Order> Orders()
         {
-            return await GetOrders().ToListAsync();
+            return GetOrders();
         }
 
         public async Task SaveOrUpdate(Order order)
@@ -66,7 +64,7 @@ namespace Store.Repositories
         public async Task<Order> FindByIdAsync(int id)
         {
             return await _context.Orders.AsNoTracking()
-                                 .FirstOrDefaultAsync(o => o.OrderID == id);
+                    .FirstOrDefaultAsync(o => o.OrderID == id);
         }
     }
 }

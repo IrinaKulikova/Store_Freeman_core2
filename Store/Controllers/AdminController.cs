@@ -6,7 +6,6 @@ using Store.Models;
 using Store.Repositories.Interfaces;
 using Store.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,23 +32,21 @@ namespace Store.Controllers
 
         #endregion
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _toyRepository.Toys().ToListAsync());
+            return View( _toyRepository.GetAll());
         }
 
         public async Task<ViewResult> Edit(int toyId)
         {
             var toy = await _toyRepository.FindByIdAsync(toyId);
             var categories = await _categoryRepository.Categories()
-                              .Select(cat => new SelectListItem()
-                              {
-                                  Value = cat.CategoryId.ToString(),
-                                  Text = cat.Name,
-                                  Selected = cat.CategoryId==toy.Category.CategoryId
-                              }).ToListAsync();
-
-            //categories.Where(c => c.Value == toyId.ToString()).FirstOrDefault().Selected = true;
+                    .Select(cat => new SelectListItem()
+                    {
+                        Value = cat.CategoryId.ToString(),
+                        Text = cat.Name,
+                        Selected = cat.CategoryId==toy.Category.CategoryId
+                    }).ToListAsync();
 
             var model = new ToyCreateViewModel()
             {
@@ -94,11 +91,11 @@ namespace Store.Controllers
         public async Task<ViewResult> Create()
         {
             var categories = await _categoryRepository.Categories()
-                             .Select(cat => new SelectListItem()
-                             {
-                                 Value = cat.CategoryId.ToString(),
-                                 Text = cat.Name
-                             }).ToListAsync();
+                    .Select(cat => new SelectListItem()
+                    {
+                        Value = cat.CategoryId.ToString(),
+                        Text = cat.Name
+                    }).ToListAsync();
 
             var model = new ToyCreateViewModel()
             {
@@ -111,11 +108,16 @@ namespace Store.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int toyId)
         {
-            var deletedToy = await _toyRepository.DeleteToy(toyId);
+            var deletedToy = await _toyRepository.FindByIdAsync(toyId);
 
-            if (deletedToy != null)
+            if (deletedToy.CartLines.Count() == 0)
             {
                 TempData["message"] = $"{deletedToy.Name} was deleted";
+                await _toyRepository.DeleteById(toyId);
+            }
+            else
+            {
+                TempData["message"] = $"{deletedToy.Name} can not be deleted!";
             }
 
             return RedirectToAction("Index");

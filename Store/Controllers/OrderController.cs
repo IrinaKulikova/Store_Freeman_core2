@@ -27,9 +27,9 @@ namespace Store.Controllers
         #endregion
 
         [Authorize]
-        public async Task<ViewResult> List()
+        public ViewResult List()
         {
-            return View(await _repository.Orders(false));
+            return View(_repository.Orders(false));
         }
 
         [HttpPost]
